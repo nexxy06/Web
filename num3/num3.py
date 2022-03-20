@@ -24,18 +24,8 @@ class Api(QMainWindow):
         super().__init__()
         uic.loadUi('api3.ui', self)
 
-        self.lib = ['map', 'sat', 'sat,skl']
-        self.counter = 0
-        self.l = self.lib[0]
+        self.l = 'map'
         self.delta = 17
-
-        # self.okbtn.clicked.connect(self.initUI)
-        # self.okbtn.setFocusPolicy(QtCore.Qt.NoFocus)
-        # self.dolg.setFocusPolicy(QtCore.Qt.ClickFocus)
-        # self.shir.setFocusPolicy(QtCore.Qt.StrongFocus)
-        # self.modebtn.setFocusPolicy(QtCore.Qt.NoFocus)
-        # self.modebtn.clicked.connect(self.modes)
-        # self.setFocusPolicy(QtCore.Qt.StrongFocus)
 
         self.initUI()
 
@@ -53,19 +43,6 @@ class Api(QMainWindow):
 
         self.create_image()
 
-    # def modes(self):
-    #     self.counter += 1
-    #     if self.counter > 2:
-    #         self.counter = 0
-    #     self.l = self.lib[self.counter]
-    #     self.params = {
-    #         "ll": ",".join([self.dl, self.sh]),
-    #         "z": self.delta,
-    #         "l": self.l
-    #     }
-    #
-    #     self.create_image()
-
     def create_image(self):
         self.response = requests.get(self.api_server, params=self.params)
         if not self.response:
@@ -80,7 +57,7 @@ class Api(QMainWindow):
         self.image.setPixmap(self.pixmap)
 
     def keyPressEvent(self, event):
-        # PgDown
+
         if event.key() == Qt.Key_PageDown:
             self.delta -= 1
             self.params = {
@@ -88,7 +65,7 @@ class Api(QMainWindow):
                 "z": self.delta,
                 "l": self.l
             }
-        # PgUp
+
         if event.key() == Qt.Key_PageUp:
             self.delta += 1
             self.params = {
@@ -96,7 +73,7 @@ class Api(QMainWindow):
                 "z": self.delta,
                 "l": self.l
             }
-        # Up
+
         if event.key() == PyQt5.QtCore.Qt.Key_Up:
             self.sh = str(float(self.sh) + 0.5)
             self.params = {
@@ -104,7 +81,7 @@ class Api(QMainWindow):
                 "z": self.delta,
                 "l": self.l
             }
-        # Down
+
         if event.key() == Qt.Key_Down:
             self.sh = str(float(self.sh) - 0.5)
             self.params = {
@@ -112,7 +89,7 @@ class Api(QMainWindow):
                 "z": self.delta,
                 "l": self.l
             }
-        # Right
+
         if event.key() == Qt.Key_Right:
             self.dl = str(float(self.dl) + 0.5)
             self.params = {
@@ -121,7 +98,6 @@ class Api(QMainWindow):
                 "l": self.l
             }
 
-        # Left
         if event.key() == Qt.Key_Left:
             self.dl = str(float(self.dl) - 0.5)
             self.params = {
